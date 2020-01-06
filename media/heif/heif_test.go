@@ -106,6 +106,20 @@ func TestRotations(t *testing.T) {
 	}
 }
 
+func TestItemLocationBaseOffset(t *testing.T) {
+	t.Parallel()
+	f, err := os.Open("testdata/bird_burst_video.heic")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	h := Open(f)
+	_, err = h.PrimaryItem()
+	if err != nil {
+		t.Fatalf("PrimaryItem: %v", err)
+	}
+}
+
 type walkFunc func(exif.FieldName, *tiff.Tag) error
 
 func (f walkFunc) Walk(name exif.FieldName, tag *tiff.Tag) error {

@@ -724,9 +724,7 @@ func parseItemLocationBox(outer *box, br *bufReader) (Box, error) {
 			ent.ConstructionMethod = byte(cmeth & 15)
 		}
 		ent.DataReferenceIndex, _ = br.readUint16()
-		if br.ok() && ilb.baseOffsetSize > 0 {
-			br.Discard(int(ilb.baseOffsetSize) / 8)
-		}
+		ent.BaseOffset, _ = br.readUintN(ilb.baseOffsetSize * 8)
 		ent.ExtentCount, _ = br.readUint16()
 		for j := 0; br.ok() && j < int(ent.ExtentCount); j++ {
 			var ol OffsetLength
